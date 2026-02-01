@@ -8,9 +8,15 @@ img = Image.open(img_path)
 
 exif = img._getexif()
 
-if exif:
-    for tag_id, value in exif.items():
-        tag = TAGS.get(tag_id, tag_id)
-        print(f'{tag:25}: {value}')
-else: 
-    print('no exif data')
+def meta_data(img):
+    data = img._getexif()
+    if data:
+        for k, v in data.items():
+            tag = TAGS.get(k, k)
+            print(f'{tag:25}: {v}')
+    else:
+        print('NO STANDARD EXIF DATA')
+        for k, v in img.info.items():
+            print(k,v)
+    
+meta_data(img)
