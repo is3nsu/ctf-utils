@@ -1,12 +1,25 @@
+import sys
 import base64
 
-print('Input base64 encoded text:')
-encoded = input(">")
+try: 
+    source_file = sys.argv[1]
+    target_file = sys.argv[2]
 
-if encoded.endswith('==') or encoded.endswith('='):
-    decoded = base64.b64decode(encoded)
-else:
-    encoded = encoded + '=='
-    decoded = base64.b64decode(encoded)
+    with open(source_file, "r") as source:
+        content = source.read()
 
-print(f'Decoded text: {decoded}')
+    if content.endswith('=='):
+        decoded = base64.b64decode(content)
+    elif content.endswith('='):
+        content += '='
+        decoded = base64.b64decode(content)
+    else:
+        content += '=='
+        decoded = base64.b64decode(content)
+
+    with open(target_file, "w") as target:
+        target.write(str(decoded))
+
+except IndexError:
+    print('Use: python3 base64_decoder.py <filename>.txt <filename2>.txt')
+
