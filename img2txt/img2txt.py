@@ -1,10 +1,12 @@
 import pytesseract as tess
 from PIL import Image
-from pathlib import Path
 import sys
 
+source_file = sys.argv[1]
+target_file = sys.argv[2]
 
-img_path = Path(__file__).with_name(f'{sys.argv[1]}')
-img = Image.open(img_path)
-txt = tess.image_to_string(img)
-print(txt)
+with Image.open(source_file) as image:
+    txt = tess.image_to_string(image)
+
+with open(target_file, 'w') as target:
+    target.write(txt)
