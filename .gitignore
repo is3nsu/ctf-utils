@@ -1,2 +1,5 @@
 # exercise data
 resources/
+
+*.txt
+*.png
